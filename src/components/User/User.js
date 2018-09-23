@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import UserService from '../../services/UserService';
 import './User.css';
+import {Link} from "react-router-dom";
 
 class User extends Component {
     constructor(props) {
@@ -11,12 +12,14 @@ class User extends Component {
     }
 
     componentDidMount() {
-
     }
 
     render() {
         return (
-            <h1>Hello World, {this.props.name}</h1>
+            <div className="App">
+                <Link to="/">Users</Link>
+                <h1>Hello World</h1>
+            </div>
         );
     }
 }
