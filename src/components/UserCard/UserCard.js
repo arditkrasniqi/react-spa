@@ -2,7 +2,13 @@ import React, {Component} from 'react';
 import './UserCard.css';
 import {Link} from 'react-router-dom';
 
-import Panel from 'react-bootstrap/lib/Panel';
+import {
+    Grid,
+    Row,
+    Col,
+    Thumbnail,
+    Button
+} from 'react-bootstrap';
 
 class UserCard extends Component {
     constructor(props){
@@ -14,12 +20,18 @@ class UserCard extends Component {
             <div className="row">
                 {this.props.users.map(user => {
                         return <div className="col-md-4">
-                            <Panel>
-                                <Panel.Heading>
-                                    <Panel.Title componentClass="h3">{user.login}</Panel.Title>
-                                </Panel.Heading>
-                                <Panel.Body>Panel content</Panel.Body>
-                            </Panel>
+                            <Grid>
+                                <Row>
+                                    <Col xs={12} md={4}>
+                                        <Thumbnail src={user.avatar_url} alt="242x200">
+                                            <h3>{user.login}</h3>
+                                            <p>
+                                                <Link to={`/user/${user.login}`}><Button bsStyle="primary">View profile</Button></Link>
+                                            </p>
+                                        </Thumbnail>
+                                    </Col>
+                                </Row>
+                            </Grid>
                         </div>
                     })}
             </div>

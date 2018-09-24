@@ -8,7 +8,7 @@ export default class UserService {
         return axios.get(`${config.BASE_URL}/users`);
     }
 
-    static getUser(id){
-
+    static getUser(username){
+        return axios.get(`${config.BASE_URL}/users/${username}`);
     }
 }

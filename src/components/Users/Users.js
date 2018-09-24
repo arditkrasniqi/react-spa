@@ -29,13 +29,18 @@ class Users extends Component {
     render() {
         return (
             <div className="App">
-                {
-                    this.state.users.length <= 0 &&
-                    <p>Loading</p>
-                }
-                {
-                    <UserCard users={this.state.users}></UserCard>
-                }
+                <div className="container">
+                    <p className="App-intro">
+                        Users List
+                    </p>
+                    {
+                        this.state.users.length <= 0 &&
+                        <p><i className="fa fa-spinner fa-spin spinner"></i></p>
+                    }
+                    {
+                        <UserCard users={this.state.users}></UserCard>
+                    }
+                </div>
             </div>
         );
     }
