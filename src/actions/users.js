@@ -1,20 +1,12 @@
-import types from './types';
-
-function getUsers(users) {
+export function setUsers(users){
     return {
-        type: types.GET_USERS,
-        users: users
+        type: 'SET_USERS',
+        payload: users
     }
 }
-
-function getUser(user) {
+export function setUser(user){
     return {
-        type: types.GET_USER,
-        user: user
+        type: 'SET_USER',
+        payload: user
     }
-}
-
-export default {
-    getUsers,
-    getUser
 }

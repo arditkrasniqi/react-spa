@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Routes from '../../routes';
-import logo from "../../logo.svg";
 
 export default () => (
     <div className="App">

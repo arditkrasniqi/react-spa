@@ -13,20 +13,19 @@ import {
     Thumbnail,
     Button
 } from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {setUser} from "../../actions/users";
 
 class User extends Component {
     constructor(props) {
         super(props);
         this.username = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-        this.state = {
-            user: false
-        }
     }
 
     getUser() {
         UserService.getUser(this.username)
             .then(response => {
-                this.setState({ user: response.data });
+                this.props.setUser(response.data);
             })
             .catch(err => {
                 console.log(err);
@@ -34,6 +33,7 @@ class User extends Component {
     }
 
     componentDidMount() {
+        this.props.setUser(false);
         this.getUser();
     }
 
@@ -50,18 +50,18 @@ class User extends Component {
                     </Grid>
                     <br />
                     {
-                        this.state.user &&
+                        this.props.user &&
                         <Grid>
                             <Row>
                                 <Col xs={12}>
-                                    <Thumbnail src={this.state.user.avatar_url} alt="242x200">
-                                        <h3>{this.state.user.login}</h3>
+                                    <Thumbnail src={this.props.user.avatar_url} alt="242x200">
+                                        <h3>{this.props.user.login}</h3>
                                         <Row className="text-left">
                                             <Col xs={12}>
-                                                <p><strong>ID</strong>: {this.state.user.id}</p>
-                                                <p><strong>Avatar</strong>: {this.state.user.avatar_url}</p>
-                                                <p><strong>Login</strong>: {this.state.user.login}</p>
-                                                <p><strong>GitHub URL</strong>: {this.state.user.html_url}</p>
+                                                <p><strong>ID</strong>: {this.props.user.id}</p>
+                                                <p><strong>Avatar</strong>: <a target="_blank" href={this.props.user.avatar_url}>{this.props.user.avatar_url}</a></p>
+                                                <p><strong>Login</strong>: {this.props.user.login}</p>
+                                                <p><strong>GitHub URL</strong>: <a target="_blank" href={this.props.user.html_url}>{this.props.user.html_url}</a></p>
                                             </Col>
                                         </Row>
                                     </Thumbnail>
@@ -70,7 +70,7 @@ class User extends Component {
                         </Grid>
                     }
                     {
-                        !this.state.user &&
+                        !this.props.user &&
                         <p>
                             <i className="fa fa-spinner fa-spin spinner"></i>
                         </p>
@@ -81,4 +81,16 @@ class User extends Component {
     }
 }
 
-export default User;
+const mapStateToProps = (state) => {
+    return {
+        user: state.data.user
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (user) => {
+            dispatch(setUser(user));
+        }
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(User);

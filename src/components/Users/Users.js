@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
-import logo from '../../logo.svg';
 import UserService from '../../services/UserService';
 import './Users.css';
 import UserCard from '../UserCard/UserCard';
+import {connect} from 'react-redux';
+import {setUsers} from '../../actions/users';
 
 class Users extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            users: []
-        }
+
     }
 
     getUsers() {
         UserService.getUsers()
             .then(response => {
-                this.setState({users: response.data});
+                this.props.setUsers(response.data);
             })
             .catch(err => {
                 console.log(err);
@@ -23,7 +22,7 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        this.getUsers()
+        this.getUsers();
     }
 
     render() {
@@ -34,11 +33,11 @@ class Users extends Component {
                         Users List
                     </p>
                     {
-                        this.state.users.length <= 0 &&
+                        this.props.users <= 0 &&
                         <p><i className="fa fa-spinner fa-spin spinner"></i></p>
                     }
                     {
-                        <UserCard users={this.state.users}></UserCard>
+                        <UserCard users={this.props.users}></UserCard>
                     }
                 </div>
             </div>
@@ -46,4 +45,16 @@ class Users extends Component {
     }
 }
 
-export default Users;
+const mapStateToProps = (state) => {
+    return {
+        users: state.data.users
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUsers: (users) => {
+            dispatch(setUsers(users));
+        }
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

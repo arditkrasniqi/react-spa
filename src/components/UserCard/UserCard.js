@@ -19,7 +19,7 @@ class UserCard extends Component {
         return (
             <div className="row">
                 {this.props.users.map(user => {
-                        return <div className="col-md-4">
+                        return <div className="col-md-4" key={user.id}>
                             <Grid>
                                 <Row>
                                     <Col xs={12} md={4}>

@@ -1,23 +1,22 @@
-import types from '../actions/types';
-
-const initialState = {
+const usersReducer = (state = {
     users: [],
     user: false
-}
-
-function usersReducer(state, action) {
-    if (typeof state === 'undefined') {
-        return Object.assign({}, initialState);
+}, action) => {
+    switch(action.type) {
+        case "SET_USERS":
+            state = {
+                ...state,
+                users: action.payload
+            };
+            break;
+        case "SET_USER":
+            state = {
+                ...state,
+                user: action.payload
+            };
+            break;
     }
-
-    switch (action.type) {
-        case types.GET_USER:
-
-        case types.GET_USERS:
-
-        default:
-            return state;
-    }
-}
+    return state;
+};
 
 export default usersReducer;
