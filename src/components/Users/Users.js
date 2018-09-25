@@ -50,14 +50,7 @@ class Users extends Component {
                 <Grid>
                     <Row>
                         <Col xs={12}>
-                            {
-                                this.state.spinner &&
-                                <p><i className="fa fa-spinner fa-spin spinner"></i></p>
-                            }
-                            {
-                                !this.state.spinner &&
-                                <Button className="load-more-btn" onClick={() => {this.getUsers(this.props.index)}}>Load More</Button>
-                            }
+                            <Button className="load-more-btn" onClick={() => {this.getUsers(this.props.index)}}>Load More</Button>
                         </Col>
                     </Row>
                 </Grid>
