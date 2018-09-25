@@ -39,18 +39,19 @@ class Users extends Component {
                     <p className="App-intro">
                         Users List
                     </p>
-                    {
-                        this.props.users <= 0 &&
-                        <p><i className="fa fa-spinner fa-spin spinner"></i></p>
-                    }
-                    {
-                        <UserCard users={this.props.users}></UserCard>
-                    }
+                    <UserCard users={this.props.users}></UserCard>
                 </div>
                 <Grid>
                     <Row>
                         <Col xs={12}>
-                            <Button className="load-more-btn" onClick={() => {this.getUsers(this.props.index)}}>Load More</Button>
+                            {
+                                this.state.spinner &&
+                                <p><i className="fa fa-spinner fa-spin spinner"></i></p>
+                            }
+                            {
+                                !this.state.spinner &&
+                                <Button className="load-more-btn" onClick={() => {this.getUsers(this.props.index)}}>Load More</Button>
+                            }
                         </Col>
                     </Row>
                 </Grid>
