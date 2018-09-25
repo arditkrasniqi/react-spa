@@ -10,3 +10,10 @@ export function setUser(user){
         payload: user
     }
 }
+
+export function setIndex(index){
+    return {
+        type: 'SET_INDEX',
+        payload: index
+    }
+}

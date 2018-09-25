@@ -1,12 +1,13 @@
 const usersReducer = (state = {
     users: [],
-    user: false
+    user: false,
+    index: 0
 }, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case "SET_USERS":
             state = {
                 ...state,
-                users: action.payload
+                users: [...state.users, ...action.payload]
             };
             break;
         case "SET_USER":
@@ -14,6 +15,12 @@ const usersReducer = (state = {
                 ...state,
                 user: action.payload
             };
+            break;
+        case "SET_INDEX":
+            state = {
+                ...state,
+                index: action.payload
+            }
             break;
     }
     return state;

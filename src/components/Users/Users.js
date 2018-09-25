@@ -3,18 +3,25 @@ import UserService from '../../services/UserService';
 import './Users.css';
 import UserCard from '../UserCard/UserCard';
 import {connect} from 'react-redux';
-import {setUsers} from '../../actions/users';
+import {setUsers, setIndex} from '../../actions/users';
+import {Grid, Row, Col, Button} from 'react-bootstrap';
 
 class Users extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            spinner: false
+        }
     }
 
-    getUsers() {
-        UserService.getUsers()
+    getUsers(index) {
+        this.setState({spinner:true});
+        UserService.getUsers(index)
             .then(response => {
-                this.props.setUsers(response.data);
+                const users = response.data;
+                this.props.setUsers(users);
+                this.props.setIndex(users[users.length - 1].id);
+                this.setState({spinner:false});
             })
             .catch(err => {
                 console.log(err);
@@ -40,6 +47,20 @@ class Users extends Component {
                         <UserCard users={this.props.users}></UserCard>
                     }
                 </div>
+                <Grid>
+                    <Row>
+                        <Col xs={12}>
+                            {
+                                this.state.spinner &&
+                                <p><i className="fa fa-spinner fa-spin spinner"></i></p>
+                            }
+                            {
+                                !this.state.spinner &&
+                                <Button className="load-more-btn" onClick={() => {this.getUsers(this.props.index)}}>Load More</Button>
+                            }
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         );
     }
@@ -47,13 +68,17 @@ class Users extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.data.users
+        users: state.data.users,
+        index: state.data.index
     }
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         setUsers: (users) => {
             dispatch(setUsers(users));
+        },
+        setIndex: (index) => {
+            dispatch(setIndex(index))
         }
     }
 };
